@@ -74,17 +74,17 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'RoomFinder',
-#         'USER': 'eric',
-#         'PASSWORD': 'eric',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-#     #Add more later.
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'RoomFinder',
+        'USER': 'eric',
+        'PASSWORD': 'eric',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+    #Add more later.
+}
 
 
 # Password validation
