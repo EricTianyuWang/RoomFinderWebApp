@@ -1,0 +1,14 @@
+{% extends "finder/base.html" %}
+{% block content %}
+    {% for room in rooms %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ room.building }}</a>
+              <a class="mr-2" href="#">{{ room.room }}</a>
+              <a class="mr-2" href="#">{{ room.capacity }}</a>
+            </div>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
