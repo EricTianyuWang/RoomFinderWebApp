@@ -50,6 +50,20 @@
           </button>
       </form>
   </div>
+  <div class="container text-center">
+    {% if rooms %}
+    <ol>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      {% for room in rooms %}
+      <br>
+          {{ room }}
+      {% endfor %}
+    </ol>
+    {% else %}
+      <h2>Sorry, no rooms found.</h2>
+    {% endif %}
+
+  </div>
   </body>
   </html>
 
