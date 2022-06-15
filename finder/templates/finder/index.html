@@ -47,19 +47,19 @@
       </form>
   </div>
   <div class="container text-center">
-    {% if not user_clicked_search %}
-      <div>
-        Search result for "{{ time_searched }}":
-      </div>
-      <ol>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        {% for d in data %}
-        <br>
-            {{ d.room_number }}
-        {% endfor %}
-      </ol>
-    {% else %}
+    {% if user_clicked_search %}
+      {% if data %}
+      <div>Search result for "{{ time_searched }}":</div>
+        <ol>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+          {% for d in data %}
+          <br>
+              {{ d.room_number }}
+          {% endfor %}
+        </ol>
+      {% else %}
         <h2>Sorry, no rooms found.</h2>
+      {% endif %}
     {% endif %}
   </div>
   </body>

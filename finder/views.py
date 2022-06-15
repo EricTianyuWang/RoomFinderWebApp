@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from .forms import DweetForm
 from .models import Student, Room
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
@@ -12,7 +11,7 @@ def index(request):
     data = ""
     time_searched = ""
     if request.method == "POST":
-        #user_clicked_search = True
+        user_clicked_search = True
         time_searched = request.POST["time_searched"]
         data = Room.objects.raw(
             f"""
