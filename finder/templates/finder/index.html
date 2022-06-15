@@ -66,9 +66,11 @@
   </div> -->
   <h2>Students</h2>
   <p>
-    {% for x in students %}
+    {% for student in students %}
       <br>
-          {{ x.STUDENT_FNAME }}
+          {{ student }}
+          {{ student.student_id }}
+          {{ student.student_fname }}
     {% endfor %}
   </p>
   </body>
