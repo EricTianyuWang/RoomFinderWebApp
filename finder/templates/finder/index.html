@@ -37,42 +37,31 @@
       <form method="post">
           {% csrf_token %}
           <br>
-          <label for="building_name">Which building would you like to search in?</label>
+          <label> What time would you like to use the room?</label>
           <br>
-          <input id="building_name" type="text" name="buidling_name" style="width:300px">
-          <br><br>
-          <label for="building_time">What time would you like to use the room?</label>
-          <br>
-          <input id="building_time" type="text" name="buidling_time" style="width:300px">
+          <input type="text" name="time_searched" style="width:300px">
           <br><br>
           <button type="submit" class="btn btn-outline-primary mr-1">
               Search for room
           </button>
       </form>
   </div>
-  <!-- <div class="container text-center">
-    {% if rooms %}
-    <ol>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      {% for room in rooms %}
-      <br>
-          {{ room }}
-      {% endfor %}
-    </ol>
+  <div class="container text-center">
+    {% if not user_clicked_search %}
+      <div>
+        Search result for "{{ time_searched }}":
+      </div>
+      <ol>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        {% for d in data %}
+        <br>
+            {{ d.room_number }}
+        {% endfor %}
+      </ol>
     {% else %}
-      <h2>Sorry, no rooms found.</h2>
+        <h2>Sorry, no rooms found.</h2>
     {% endif %}
-
-  </div> -->
-  <h2>Students</h2>
-  <p>
-    {% for student in students %}
-      <br>
-          {{ student }}
-          {{ student.student_id }}
-          {{ student.student_fname }}
-    {% endfor %}
-  </p>
+  </div>
   </body>
   </html>
 
