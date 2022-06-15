@@ -79,9 +79,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'RoomFinder',
         'USER': 'eric', #was eric
-        'USER': 'sofia',
+        # 'USER': 'sofia',
         'PASSWORD': 'eric', #was eric
-        'PASSWORD': 'sofia',
+        # 'PASSWORD': 'sofia',
         'HOST': 'localhost', #was localhost
         'PORT': '3306',
     }
