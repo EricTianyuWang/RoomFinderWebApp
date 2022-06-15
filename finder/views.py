@@ -4,7 +4,8 @@ from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
 
 # def index(request):
-#     return render(request, 'finder/index.html') 
+#     return render(request, 'finder/index.html')
+
 
 def index(request):
     user_clicked_search = False
@@ -37,5 +38,6 @@ def index(request):
             """
         )
 
-    context = { 'user_clicked_search': user_clicked_search, 'data': data, 'time_searched': time_searched }
+    context = {'user_clicked_search': user_clicked_search,
+               'data': data, 'time_searched': time_searched}
     return render(request, 'finder/index.html', context)
