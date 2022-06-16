@@ -73,6 +73,8 @@ def index(request):
 
 def profile(request): 
     student_fname = ""
+    student_lname = ""
+    student_email = ""
     if "student_fname" in request.POST and "student_lname" in request.POST and "student_email" in request.POST:    
         student_fname = request.POST["student_fname"]
         student_lname = request.POST["student_lname"]
