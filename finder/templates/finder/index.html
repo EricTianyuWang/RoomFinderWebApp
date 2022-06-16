@@ -59,10 +59,20 @@
       <form method="post">
           {% csrf_token %}
           <br>
-          <label> What time would you like to use the room?</label>
+          <label> What time would you like to search?</label>
           <br>
           <input type="text" name="time_searched" style="width:300px" placeholder="Ex: 1:00pm">
           <br><br>
+          <label> What day would you like to search?</label>
+          <br>
+          <select name="day_searched" id="day_searched">
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+          </select>
+          <br><br>  
           <button type="submit" class="btn btn-outline-primary mr-1">
               Search for room
           </button>
@@ -70,7 +80,7 @@
 
     {% if user_clicked_search %}
       {% if rooms_found %}
-        <div>Rooms found by searching "{{ time_searched }}":</div>
+        <div>Rooms found by searching "{{ time_searched }} and "{{ day_searched }}":</div>
           <table class="td mx-auto">
               <tr>
                   {% for room in rooms_found %}
@@ -88,11 +98,37 @@
           <br>
           <label>Make a reservation by entering your email, a room, and a time.</label>
           <br>
+          <br>
           <input type="text" name="student_email" style="width:300px" placeholder="Ex: a@gmail.com">
+          <br>
           <br>
           <input type="text" name="reservation_room" style="width:300px" placeholder="Ex: D222">
           <br>
-          <input type="text" name="reservation_time" style="width:300px" placeholder="Ex: 1:00pm">
+          <label> What day would you like to reserve?</label>
+          <br>
+          <select name="reserved_day" id="reserved_day">
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+          </select>
+          <br><br>
+          <select name="reservation_time" id="reservation_time">
+            <option value="8:00AM">8:00AM - 9:00AM</option>
+            <option value="9:00AM">9:00AM - 10:00AM</option>
+            <option value="10:00AM">10:00AM - 11:00AM</option>
+            <option value="11:00AM">11:00AM - 12:00PM</option>
+            <option value="12:00PM">12:00PM - 1:00PM</option>
+            <option value="1:00PM">1:00PM - 2:00PM</option>
+            <option value="2:00PM">2:00PM - 3:00PM</option>
+            <option value="3:00PM">3:00PM - 4:00PM</option>
+            <option value="4:00PM">4:00PM - 5:00PM</option>
+            <option value="5:00PM">5:00PM - 6:00PM</option>
+            <option value="6:00PM">6:00PM - 7:00PM</option>
+            <option value="7:00PM">7:00PM - 8:00PM</option>
+            <option value="8:00PM">8:00PM - 9:00PM</option>
+          </select>          
           <br><br>
           <button type="submit" class="btn btn-outline-primary mr-1">
               Make reservation
