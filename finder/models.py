@@ -75,7 +75,7 @@ class Reservation(models.Model):
     reservation_date = models.CharField(
         db_column='RESERVATION_DATE', max_length=255, blank=True, null=True)
     # Field name made lowercase.
-    time = models.ForeignKey(
+    time_id = models.ForeignKey(
         'TimeBlock', models.DO_NOTHING, db_column='TIME_ID')
 
     class Meta:

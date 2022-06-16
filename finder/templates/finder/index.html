@@ -6,6 +6,7 @@
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
+
 <style>
   body {
     background-color: #eeeeee;
@@ -32,37 +33,50 @@
 
 <body>
   <div class="form-container container center" style="text-align: center; width: 100vw; padding-top: 4em;  ">
-      <!--<h2 style="font-family:sans-serif; text-align:center;">Create an Event!</h2>-->
-      <h1 class="display-6 text-secondary">Search for a Room!</h1>
+      <h1 class="display-6 text-primary">Search for a Room in Thornton Hall!</h1>
       <form method="post">
           {% csrf_token %}
           <br>
           <label> What time would you like to use the room?</label>
           <br>
-          <input type="text" name="time_searched" style="width:300px">
+          <input type="text" name="time_searched" style="width:300px" placeholder="Ex: 1:00pm">
           <br><br>
           <button type="submit" class="btn btn-outline-primary mr-1">
               Search for room
           </button>
       </form>
-  </div>
-  <div class="container text-center">
+
     {% if user_clicked_search %}
-      {% if data %}
-      <div>Search result for "{{ time_searched }}":</div>
-        <ol>
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-          {% for d in data %}
-          <br>
-              {{ d.room_number }}
-          {% endfor %}
-        </ol>
+      {% if rooms_found %}
+        <div>Rooms found by searching "{{ time_searched }}":</div>
+          <table class="td mx-auto">
+              <tr>
+                  {% for room in rooms_found %}
+                    <tr>{{ room.room_number }} <br></tr>
+                  {% endfor %}
+              </tr>
+          </table>
       {% else %}
-        <h2>Sorry, no rooms found.</h2>
+        <h2 class="display-6 text-secondary">Sorry, no room found.</h2>
       {% endif %}
     {% endif %}
-  </div>
-  </body>
-  </html>
 
+        <form method="post">
+          {% csrf_token %}
+          <br>
+          <label>Make a reservation by choosing a room and a time</label>
+          <br>
+          <input type="text" name="reservation_room" style="width:300px" placeholder="Ex: D222">
+          <br>
+          <input type="text" name="reservation_time" style="width:300px" placeholder="Ex: 1:00pm">
+          <br><br>
+          <button type="submit" class="btn btn-outline-primary mr-1">
+              Make reservation
+          </button>
+      </form>
+        {% if reservation_room %}
+        <p>Success! You created a reservation for {{reservation_room}} at {{reservation_time}}.</p>
+        {% endif %}
+  </div>  
+</body>
 
