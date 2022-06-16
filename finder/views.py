@@ -78,8 +78,10 @@ def profile(request):
         student_lname = request.POST["student_lname"]
         student_email =  request.POST["student_email"]    
     with connection.cursor() as cursor:
-        cursor.execute(f"INSERT INTO STUDENT VALUES(STUDENT_ID, '{student_fname}', '{}'")
+        cursor.execute(f"INSERT INTO STUDENT VALUES(STUDENT_ID, '{student_fname}', '{student_lname}', '{student_email}')")
     context = {
-        'student_fname': student_fname
+        'student_fname': student_fname,
+        'student_lname': student_lname,
+        'student_email': student_email
     }
     return render(request, 'finder/profile.html', context)
