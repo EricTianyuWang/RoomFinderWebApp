@@ -73,8 +73,12 @@ def index(request):
 
 def profile(request): 
     student_fname = ""
-    if "student_fname" in request.POST:    
-        student_fname = request.POST["student_fname"]  
+    if "student_fname" in request.POST and "student_lname" in request.POST and "student_email" in request.POST:    
+        student_fname = request.POST["student_fname"]
+        student_lname = request.POST["student_lname"]
+        student_email =  request.POST["student_email"]    
+    with connection.cursor() as cursor:
+        cursor.execute(f"INSERT INTO STUDENT VALUES(STUDENT_ID, '{student_fname}', '{}'")
     context = {
         'student_fname': student_fname
     }
