@@ -86,7 +86,9 @@
         <form method="post">
           {% csrf_token %}
           <br>
-          <label>Make a reservation by choosing a room and a time</label>
+          <label>Make a reservation by entering your email, a room, and a time.</label>
+          <br>
+          <input type="text" name="student_email" style="width:300px" placeholder="Ex: a@gmail.com">
           <br>
           <input type="text" name="reservation_room" style="width:300px" placeholder="Ex: D222">
           <br>

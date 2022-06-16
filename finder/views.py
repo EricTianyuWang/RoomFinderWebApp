@@ -37,12 +37,17 @@ def index(request):
             WHERE TIME_BLOCK.TIME_ID = '{time_searched}';
             """
         )
-    if "reservation_room" in request.POST and "reservation_time" in request.POST:
+
+    if "reservation_room" in request.POST and "reservation_time" in request.POST and "student_email" in request.POST:
         reservation_room =  request.POST["reservation_room"]
         reservation_time =  request.POST["reservation_time"]
-
-        student_id = 2
-
+        student_email = request.POST["student_email"]
+        student_id = ""
+        students = Student.objects.raw(f"SELECT STUDENT_ID FROM STUDENT WHERE STUDENT_EMAIL LIKE '{student_email}'")
+        for s in students:
+            student_id = s.student_id
+        print("------------------------------------------------------------------------", request.POST["student_email"])
+        print("sID", student_id)
         rooms = Room.objects.raw(f"SELECT ROOM_ID FROM ROOM WHERE ROOM.ROOM_NUMBER LIKE '{reservation_room}'")
         room_id = ""
         for a in rooms:
