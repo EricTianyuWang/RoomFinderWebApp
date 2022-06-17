@@ -42,6 +42,7 @@ def index(request):
             """
         )
     reservation_success = False
+    email_is_valid = False
     reserved_day = ""
     if "reservation_room" in request.POST and "reservation_time" in request.POST and "student_email" in request.POST and "reserved_day" in request.POST:
         reserved_day = request.POST["reserved_day"]
@@ -71,14 +72,17 @@ def index(request):
             # the format looks like this: INSERT INTO RESERVATION VALUES(RESERVATION_ID, STUDENT_ID, ROOM_ID, RESERVATION_DATE, TIME_ID)
             #cursor.execute(f"INSERT INTO RESERVATION VALUES(RESERVATION_ID, {student_id}, {room_id}, '{reservation_date}', {time_id})")
             available_return = Availability.objects.raw(f"SELECT AVAILABILITY_ID FROM AVAILABILITY WHERE AVAILABILITY.ROOM_ID = {room_id} AND AVAILABILITY.TIME_ID = {my_time_id} AND AVAILABILITY.AVAILABLE_DAY = '{reserved_day}';")
-            if len(available_return) > 0:
+            if len(available_return) > 0 and len(students) > 0:
                 cursor.execute(f"INSERT INTO RESERVATION VALUES(RESERVATION_ID, {student_id}, {room_id}, '{reserved_day}', {my_time_id})")
                 cursor.execute(f"INSERT INTO STUDENT_ROOM VALUES({student_id}, {room_id})")
                 cursor.execute(f"DELETE FROM AVAILABILITY WHERE AVAILABILITY.ROOM_ID = {room_id} AND AVAILABILITY.TIME_ID = {my_time_id}")
                 reservation_success = True
+                email_is_valid = True
+            elif len(students) > 0:
+                email_is_valid = True
+                reservation_success = False
             else:
                 reservation_success = False
-                print("-------------------blahhhhhhh--------------------------")
 
     context = {
         'user_clicked_search': user_clicked_search,
@@ -87,8 +91,9 @@ def index(request):
         'reservation_room': reservation_room,
         'reservation_time': reservation_time,
         'reserved_day': reserved_day,
+        'day_searched': day_searched,
         'reservation_success': reservation_success,
-        'day_searched': day_searched
+        'email_is_valid': email_is_valid
     }
     return render(request, 'finder/index.html', context)
 

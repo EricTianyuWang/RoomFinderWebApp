@@ -177,7 +177,11 @@
           {% if reservation_success %}
             <p>Success! You created a reservation for {{reservation_room}} at {{reservation_time}}.</p>
           {% else %}
-            <p>Time and room are already taken!</p>
+            {% if email_is_valid %}
+              <p>Time and room are either already taken</p>
+            {% else %}
+              <p>The student email you entered does not exist in our database.</p>
+            {% endif %}
           {% endif %}
         {% endif %}
   </div>  
