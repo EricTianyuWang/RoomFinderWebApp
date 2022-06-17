@@ -102,6 +102,7 @@ def profile(request):
         student_email =  request.POST["student_email"]    
     with connection.cursor() as cursor:
         cursor.execute(f"INSERT INTO STUDENT VALUES(STUDENT_ID, '{student_fname}', '{student_lname}', '{student_email}')")
+        cursor.execute(f"DELETE FROM STUDENT WHERE STUDENT.STUDENT_FNAME=''")
     context = {
         'student_fname': student_fname,
         'student_lname': student_lname,
