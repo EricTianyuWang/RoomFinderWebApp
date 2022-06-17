@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Student, Room, TimeBlock
+from .models import Student, Room, TimeBlock, Availability
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
 from django.db import connection
@@ -41,6 +41,7 @@ def index(request):
             WHERE TIME_BLOCK.START_TIME = '{time_searched}' AND AVAILROOM.AVAILABLE_DAY = '{day_searched}';
             """
         )
+    reservation_success = False
     reserved_day = ""
     if "reservation_room" in request.POST and "reservation_time" in request.POST and "student_email" in request.POST and "reserved_day" in request.POST:
         reserved_day = request.POST["reserved_day"]
@@ -69,16 +70,24 @@ def index(request):
         with connection.cursor() as cursor:
             # the format looks like this: INSERT INTO RESERVATION VALUES(RESERVATION_ID, STUDENT_ID, ROOM_ID, RESERVATION_DATE, TIME_ID)
             #cursor.execute(f"INSERT INTO RESERVATION VALUES(RESERVATION_ID, {student_id}, {room_id}, '{reservation_date}', {time_id})")
-            cursor.execute(f"INSERT INTO RESERVATION VALUES(RESERVATION_ID, {student_id}, {room_id}, '{reserved_day}', {my_time_id})")
-            cursor.execute(f"DELETE FROM AVAILABILITY WHERE AVAILABILITY.ROOM_ID = {room_id} AND AVAILABILITY.TIME_ID = {my_time_id}")
-            
+            available_return = Availability.objects.raw(f"SELECT AVAILABILITY_ID FROM AVAILABILITY WHERE AVAILABILITY.ROOM_ID = {room_id} AND AVAILABILITY.TIME_ID = {my_time_id} AND AVAILABILITY.AVAILABLE_DAY = '{reserved_day}';")
+            if len(available_return) > 0:
+                cursor.execute(f"INSERT INTO RESERVATION VALUES(RESERVATION_ID, {student_id}, {room_id}, '{reserved_day}', {my_time_id})")
+                cursor.execute(f"INSERT INTO STUDENT_ROOM VALUES({student_id}, {room_id})")
+                cursor.execute(f"DELETE FROM AVAILABILITY WHERE AVAILABILITY.ROOM_ID = {room_id} AND AVAILABILITY.TIME_ID = {my_time_id}")
+                reservation_success = True
+            else:
+                reservation_success = False
+                print("-------------------blahhhhhhh--------------------------")
+
     context = {
         'user_clicked_search': user_clicked_search,
         'rooms_found': rooms_found, 
         'time_searched': time_searched,
         'reservation_room': reservation_room,
         'reservation_time': reservation_time,
-        'reserved_day': reserved_day
+        'reserved_day': reserved_day,
+        'reservation_success': reservation_success
     }
     return render(request, 'finder/index.html', context)
 
@@ -93,6 +102,7 @@ def profile(request):
         student_email =  request.POST["student_email"]    
     with connection.cursor() as cursor:
         cursor.execute(f"INSERT INTO STUDENT VALUES(STUDENT_ID, '{student_fname}', '{student_lname}', '{student_email}')")
+        cursor.execute(f"DELETE FROM STUDENT WHERE STUDENT.STUDENT_FNAME=''")
     context = {
         'student_fname': student_fname,
         'student_lname': student_lname,
