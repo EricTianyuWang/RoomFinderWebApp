@@ -87,7 +87,8 @@ def index(request):
         'reservation_room': reservation_room,
         'reservation_time': reservation_time,
         'reserved_day': reserved_day,
-        'reservation_success': reservation_success
+        'reservation_success': reservation_success,
+        'day_searched': day_searched
     }
     return render(request, 'finder/index.html', context)
 
