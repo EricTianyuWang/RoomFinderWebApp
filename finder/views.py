@@ -72,7 +72,7 @@ def index(request):
             # the format looks like this: INSERT INTO RESERVATION VALUES(RESERVATION_ID, STUDENT_ID, ROOM_ID, RESERVATION_DATE, TIME_ID)
             #cursor.execute(f"INSERT INTO RESERVATION VALUES(RESERVATION_ID, {student_id}, {room_id}, '{reservation_date}', {time_id})")
             available_return = Availability.objects.raw(f"SELECT AVAILABILITY_ID FROM AVAILABILITY WHERE AVAILABILITY.ROOM_ID = {room_id} AND AVAILABILITY.TIME_ID = {my_time_id} AND AVAILABILITY.AVAILABLE_DAY = '{reserved_day}';")
-            if len(available_return) > 0 and len(students) > 0:
+            if len(available_return) > 0 and len(students) > 0 and len(rooms) > 0 and reserved_day != "" and len(students) > 0 and len(times) > 0:
                 cursor.execute(f"INSERT INTO RESERVATION VALUES(RESERVATION_ID, {student_id}, {room_id}, '{reserved_day}', {my_time_id})")
                 cursor.execute(f"INSERT INTO STUDENT_ROOM VALUES({student_id}, {room_id})")
                 cursor.execute(f"DELETE FROM AVAILABILITY WHERE AVAILABILITY.ROOM_ID = {room_id} AND AVAILABILITY.TIME_ID = {my_time_id}")
